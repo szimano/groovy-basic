@@ -9,7 +9,7 @@ public class RomanticDate extends Meeting<RomanticAttendee> {
     }
 
     public RomanticDate(Date dateStart, Date dateEnd, List<RomanticAttendee> attendees) {
-        super(dateStart, dateEnd, MeetingType.CRAZY, attendees);
+        super(dateStart, dateEnd, MeetingType.ROMANTIC, attendees);
     }
 
     public boolean isMoral() {

@@ -1,0 +1,42 @@
+[
+  {
+    "dateStart": "Feb 17, 2014 9:41:59 PM",
+    "dateEnd": "Feb 17, 2014 9:41:59 PM",
+    "attendeeList": [
+      {
+        "sex": "FEMALE",
+        "lookingFor": "MALE",
+        "name": "Ta Jedyna",
+        "email": "tajedyna@someemail.com"
+      },
+      {
+        "sex": "MALE",
+        "lookingFor": "FEMALE",
+        "name": "Ten Jedyny",
+        "email": "tenjedyny@someemail.com"
+      }
+    ],
+    "type": "ROMANTIC"
+  },
+  {
+    "dateStart": "Feb 17, 2014 9:41:59 PM",
+    "dateEnd": "Feb 17, 2014 9:41:59 PM",
+    "attendeeList": [
+      {
+        "bottlesOfBeer": 7,
+        "bottlesOfVodka": 8,
+        "snacks": 2,
+        "name": "Waldek",
+        "email": "waldek@from"
+      },
+      {
+        "bottlesOfBeer": 20,
+        "bottlesOfVodka": 40,
+        "snacks": 1,
+        "name": "Rysiek",
+        "email": "rysiek@from"
+      }
+    ],
+    "type": "CRAZY"
+  }
+]

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class JavaFunCalendar {
@@ -52,6 +53,83 @@ public class JavaFunCalendar {
         }
     }
 
+    public void removeInmoralDates() {
+        Iterator<Meeting> it = meetings.iterator();
+
+        while (it.hasNext()) {
+            Meeting m = it.next();
+
+            if (m instanceof RomanticDate) {
+                RomanticDate date = (RomanticDate) m;
+
+                if (date.getAttendeeList().size() > 2) {
+                    it.remove();
+                } else {
+                    Sex firstSex = date.getAttendeeList().get(0).getSex();
+                    Sex secondSex = date.getAttendeeList().get(1).getSex();
+                    if (firstSex == secondSex || firstSex == Sex.DOESNT_MATTER || secondSex == Sex.DOESNT_MATTER) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+    }
+
+    public void removeBadGuests() {
+        for (Meeting meeting : meetings) {
+            if (meeting instanceof CrazyNight) {
+                CrazyNight party = (CrazyNight) meeting;
+
+                Iterator<CrazyAttendee> it = party.getAttendeeList().iterator();
+
+                while (it.hasNext()) {
+                    CrazyAttendee attendee = it.next();
+
+                    if (attendee.getBottlesOfBeer() + attendee.getBottlesOfVodka() < 10) {
+                        attendee.sendEmail("Sorry man. Not enough booze");
+
+                        it.remove();
+                    }
+                    else if (attendee.getSnacks() == 0) {
+                        attendee.sendEmail("Sorry man. Next time bring something to eat");
+
+                        it.remove();
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void removeCheapBusinessMeetings(BigDecimal enoughMoney$$$) {
+        Iterator<Meeting> it = meetings.iterator();
+
+        while (it.hasNext()) {
+            Meeting m = it.next();
+
+            if (m instanceof Business) {
+                Business businessMeeting = (Business) m;
+
+                BigDecimal totalMoney$$$ = BigDecimal.ZERO;
+
+                for (BusinessAttendee attendee : businessMeeting.getAttendeeList()) {
+                    totalMoney$$$ = totalMoney$$$.add(attendee.getHowMuchMoney());
+                }
+
+                if (totalMoney$$$.compareTo(enoughMoney$$$) < 0) {
+                    for (BusinessAttendee attendee : businessMeeting.getAttendeeList()) {
+                        attendee.sendEmail("I am sorry, but Mr XYZ has to help someone cross the street.");
+                    }
+
+                    it.remove();
+                }
+            }
+        }
+    }
+
+
+    // ==========================
+
     @Override
     public String toString() {
         return "JavaFunCalendar{" +
@@ -72,11 +150,15 @@ public class JavaFunCalendar {
                         new RomanticAttendee("Wiola", "wiola@someemail.com", Sex.FEMALE, Sex.MALE),
                         new RomanticAttendee("Wojtek", "wojtek@someemail.com", Sex.FEMALE, Sex.DOESNT_MATTER))));
 
+        calendar.getMeetings().add(new RomanticDate(new Date(), new Date(),
+                Arrays.asList(new RomanticAttendee("Ta Jedyna", "tajedyna@someemail.com", Sex.FEMALE, Sex.MALE),
+                        new RomanticAttendee("Ten Jedyny", "tenjedyny@someemail.com", Sex.MALE, Sex.FEMALE))));
+
         calendar.getMeetings().add(new CrazyNight(new Date(), new Date(),
                 Arrays.asList(new CrazyAttendee("Waldek", "waldek@from", 7, 8, 2),
                         new CrazyAttendee("Piotrek", "piotrek@from", 1, 2, 10),
                         new CrazyAttendee("Mariolka", "mariolka@from", 2, 0, 0),
-                        new CrazyAttendee("Rysiek", "rysiek@from", 20, 40, 0))));
+                        new CrazyAttendee("Rysiek", "rysiek@from", 20, 40, 1))));
 
         calendar.writeMeetings("src/main/resources/calendar.json");
 
@@ -84,6 +166,16 @@ public class JavaFunCalendar {
 
         calendar.readMeetings("src/main/resources/calendar.json");
 
-        System.out.println(calendar);
+        calendar.removeInmoralDates();
+
+        calendar.writeMeetings("src/main/resources/calendar-moral.json");
+
+        calendar.removeBadGuests();
+
+        calendar.writeMeetings("src/main/resources/calendar-good-guests.json");
+
+        calendar.removeCheapBusinessMeetings(new BigDecimal(1000000000000000000L));
+
+        calendar.writeMeetings("src/main/resources/calendar-expensive-business-stuff.json");
     }
 }

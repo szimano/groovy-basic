@@ -17,31 +17,6 @@
     "attendeeList": [
       {
         "sex": "FEMALE",
-        "lookingFor": "DOESNT_MATTER",
-        "name": "Jola",
-        "email": "jola@someemail.com"
-      },
-      {
-        "sex": "FEMALE",
-        "lookingFor": "MALE",
-        "name": "Wiola",
-        "email": "wiola@someemail.com"
-      },
-      {
-        "sex": "FEMALE",
-        "lookingFor": "DOESNT_MATTER",
-        "name": "Wojtek",
-        "email": "wojtek@someemail.com"
-      }
-    ],
-    "type": "ROMANTIC"
-  },
-  {
-    "dateStart": "Feb 17, 2014 9:41:59 PM",
-    "dateEnd": "Feb 17, 2014 9:41:59 PM",
-    "attendeeList": [
-      {
-        "sex": "FEMALE",
         "lookingFor": "MALE",
         "name": "Ta Jedyna",
         "email": "tajedyna@someemail.com"
@@ -65,20 +40,6 @@
         "snacks": 2,
         "name": "Waldek",
         "email": "waldek@from"
-      },
-      {
-        "bottlesOfBeer": 1,
-        "bottlesOfVodka": 2,
-        "snacks": 10,
-        "name": "Piotrek",
-        "email": "piotrek@from"
-      },
-      {
-        "bottlesOfBeer": 2,
-        "bottlesOfVodka": 0,
-        "snacks": 0,
-        "name": "Mariolka",
-        "email": "mariolka@from"
       },
       {
         "bottlesOfBeer": 20,

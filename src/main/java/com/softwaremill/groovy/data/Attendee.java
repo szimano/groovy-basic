@@ -30,6 +30,10 @@ public abstract class Attendee {
         this.email = email;
     }
 
+    public void sendEmail(String msg) {
+        System.out.println("Sending email to "+name+":\n "+msg);
+    }
+
     @Override
     public String toString() {
         return "Attendee{" +
