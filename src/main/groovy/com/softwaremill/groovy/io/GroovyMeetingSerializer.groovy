@@ -28,16 +28,18 @@ class GroovyMeetingSerializer {
             List<Meeting> meetings = new ArrayList<>();
 
             for (JsonElement jsonElement : array) {
-                String str = jsonElement.toString();
-
-                if (str.contains("\"type\":\"BUSINESS\"")) {
-                    meetings.add(gson.fromJson(jsonElement, Business.class));
-                }
-                else if (str.contains("\"type\":\"CRAZY\"")) {
-                    meetings.add(gson.fromJson(jsonElement, CrazyNight.class));
-                }
-                else if (str.contains("\"type\":\"ROMANTIC\"")) {
-                    meetings.add(gson.fromJson(jsonElement, RomanticDate.class));
+                switch (jsonElement.toString()) {
+                    case ~/.*\"type\"\:\"BUSINESS\".*/:
+                        meetings.add(gson.fromJson(jsonElement, Business.class))
+                        break
+                    case ~/.*\"type\"\:\"CRAZY\".*/:
+                        meetings.add(gson.fromJson(jsonElement, CrazyNight.class))
+                        break
+                    case ~/.*\"type\"\:\"ROMANTIC\".*/:
+                        meetings.add(gson.fromJson(jsonElement, RomanticDate.class));
+                        break
+                    default:
+                        throw new RuntimeException("I don't understand ${jsonElement.toString()}")
                 }
             }
 
