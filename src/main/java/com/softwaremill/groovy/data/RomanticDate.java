@@ -23,4 +23,14 @@ public class RomanticDate extends Meeting {
     public boolean isFun() {
         return getAttendeeList().size() > 2;
     }
+
+    public boolean validDate() {
+        for (Attendee attendee : getAttendeeList()) {
+            if (!(attendee instanceof RomanticAttendee)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

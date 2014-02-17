@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public abstract class Meeting {
+public abstract class Meeting implements Comparable<Meeting> {
 
     private Date dateStart;
     private Date dateEnd;
@@ -61,5 +61,10 @@ public abstract class Meeting {
 
     public void setAttendeeList(List<Attendee> attendeeList) {
         this.attendeeList = attendeeList;
+    }
+
+    @Override
+    public int compareTo(Meeting other) {
+        return dateStart.compareTo(other.dateStart);
     }
 }
