@@ -5,6 +5,7 @@ import com.softwaremill.groovy.groovydata.BusinessAttendee
 import com.softwaremill.groovy.groovydata.CrazyAttendee
 import com.softwaremill.groovy.groovydata.CrazyNight
 import com.softwaremill.groovy.groovydata.Meeting
+import com.softwaremill.groovy.groovydata.MeetingType
 import com.softwaremill.groovy.groovydata.RomanticAttendee
 import com.softwaremill.groovy.groovydata.RomanticDate
 import com.softwaremill.groovy.groovydata.Sex
@@ -85,28 +86,14 @@ class GroovyFunCalendar {
 
 
     public void removeCheapBusinessMeetings(BigDecimal enoughMoney$$$) {
-        Iterator<Meeting> it = meetings.iterator();
-
-        while (it.hasNext()) {
-            Meeting m = it.next();
-
-            if (m instanceof Business) {
-                Business businessMeeting = (Business) m;
-
-                BigDecimal totalMoney$$$ = BigDecimal.ZERO;
-
-                for (BusinessAttendee attendee : businessMeeting.getAttendeeList()) {
-                    totalMoney$$$ = totalMoney$$$.add(attendee.getHowMuchMoney());
+        meetings.removeAll {
+            if (it.type == MeetingType.BUSINESS && it.attendeeList.howMuchMoney.sum() < enoughMoney$$$) {
+                it.attendeeList.each {
+                    it.sendEmail("I am sorry, but Mr XYZ has to help someone cross the street.")
                 }
-
-                if (totalMoney$$$.compareTo(enoughMoney$$$) < 0) {
-                    for (BusinessAttendee attendee : businessMeeting.getAttendeeList()) {
-                        attendee.sendEmail("I am sorry, but Mr XYZ has to help someone cross the street.");
-                    }
-
-                    it.remove();
-                }
+                return true
             }
+            return false
         }
     }
 
