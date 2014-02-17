@@ -1,15 +1,12 @@
-package com.softwaremill.groovy.data;
+package com.softwaremill.groovy.groovydata
 
-import java.util.Date;
-import java.util.List;
+import groovy.transform.Canonical
 
+@Canonical
 public class RomanticDate extends Meeting<RomanticAttendee> {
 
-    public RomanticDate() {
-    }
-
-    public RomanticDate(Date dateStart, Date dateEnd, List<RomanticAttendee> attendees) {
-        super(dateStart, dateEnd, MeetingType.ROMANTIC, attendees);
+    RomanticDate() {
+        type = MeetingType.ROMANTIC
     }
 
     public boolean isMoral() {

@@ -5,10 +5,10 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
-import com.softwaremill.groovy.data.Business
-import com.softwaremill.groovy.data.CrazyNight
-import com.softwaremill.groovy.data.Meeting
-import com.softwaremill.groovy.data.RomanticDate
+import com.softwaremill.groovy.groovydata.Business
+import com.softwaremill.groovy.groovydata.CrazyNight
+import com.softwaremill.groovy.groovydata.Meeting
+import com.softwaremill.groovy.groovydata.RomanticDate
 
 class GroovyMeetingSerializer {
     private final String calendarFile;

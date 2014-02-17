@@ -1,13 +1,13 @@
 package com.softwaremill.groovy
 
-import com.softwaremill.groovy.data.Business
-import com.softwaremill.groovy.data.BusinessAttendee
-import com.softwaremill.groovy.data.CrazyAttendee
-import com.softwaremill.groovy.data.CrazyNight
-import com.softwaremill.groovy.data.Meeting
-import com.softwaremill.groovy.data.RomanticAttendee
-import com.softwaremill.groovy.data.RomanticDate
-import com.softwaremill.groovy.data.Sex
+import com.softwaremill.groovy.groovydata.Business
+import com.softwaremill.groovy.groovydata.BusinessAttendee
+import com.softwaremill.groovy.groovydata.CrazyAttendee
+import com.softwaremill.groovy.groovydata.CrazyNight
+import com.softwaremill.groovy.groovydata.Meeting
+import com.softwaremill.groovy.groovydata.RomanticAttendee
+import com.softwaremill.groovy.groovydata.RomanticDate
+import com.softwaremill.groovy.groovydata.Sex
 import com.softwaremill.groovy.io.GroovyMeetingSerializer
 
 class GroovyFunCalendar {
@@ -73,8 +73,7 @@ class GroovyFunCalendar {
                         attendee.sendEmail("Sorry man. Not enough booze");
 
                         it.remove();
-                    }
-                    else if (attendee.getSnacks() == 0) {
+                    } else if (attendee.getSnacks() == 0) {
                         attendee.sendEmail("Sorry man. Next time bring something to eat");
 
                         it.remove();
@@ -111,7 +110,6 @@ class GroovyFunCalendar {
         }
     }
 
-
     // ==========================
 
     @Override
@@ -126,23 +124,29 @@ class GroovyFunCalendar {
 
         GroovyFunCalendar calendar = new GroovyFunCalendar();
 
-        calendar.meetings.add(new Business(new Date(), new Date(),
-                Arrays.asList(new BusinessAttendee("John", "john@doe.com", BigDecimal.ONE))));
+        calendar.meetings.add(new Business(dateStart: new Date(), dateEnd: new Date(),
+                attendeeList: Arrays.asList(new BusinessAttendee(name: "John", email: "john@doe.com", howMuchMoney: 1))));
 
-        calendar.meetings.add(new RomanticDate(new Date(), new Date(),
-                Arrays.asList(new RomanticAttendee("Jola", "jola@someemail.com", Sex.FEMALE, Sex.DOESNT_MATTER),
-                        new RomanticAttendee("Wiola", "wiola@someemail.com", Sex.FEMALE, Sex.MALE),
-                        new RomanticAttendee("Wojtek", "wojtek@someemail.com", Sex.FEMALE, Sex.DOESNT_MATTER))));
+        calendar.meetings.add(new RomanticDate(dateStart: new Date(), dateEnd: new Date(),
+                attendeeList: Arrays.asList(new RomanticAttendee(name: "Jola", email: "jola@someemail.com",
+                        sex: Sex.FEMALE, lookingFor: Sex.DOESNT_MATTER),
+                        new RomanticAttendee(name: "Wiola", email: "wiola@someemail.com",
+                                sex: Sex.FEMALE, lookingFor: Sex.MALE),
+                        new RomanticAttendee(name: "Wojtek", email: "wojtek@someemail.com", sex: Sex.FEMALE,
+                                lookingFor: Sex.DOESNT_MATTER))));
 
-        calendar.meetings.add(new RomanticDate(new Date(), new Date(),
-                Arrays.asList(new RomanticAttendee("Ta Jedyna", "tajedyna@someemail.com", Sex.FEMALE, Sex.MALE),
-                        new RomanticAttendee("Ten Jedyny", "tenjedyny@someemail.com", Sex.MALE, Sex.FEMALE))));
+        calendar.meetings.add(new RomanticDate(dateStart: new Date(), dateEnd: new Date(),
+                attendeeList: Arrays.asList(new RomanticAttendee(name: "Ta Jedyna", email: "tajedyna@someemail.com",
+                        sex: Sex.FEMALE, lookingFor: Sex.MALE),
+                        new RomanticAttendee(name: "Ten Jedyny", email: "tenjedyny@someemail.com",
+                                sex: Sex.MALE, lookingFor: Sex.FEMALE))));
 
-        calendar.meetings.add(new CrazyNight(new Date(), new Date(),
-                Arrays.asList(new CrazyAttendee("Waldek", "waldek@from", 7, 8, 2),
-                        new CrazyAttendee("Piotrek", "piotrek@from", 1, 2, 10),
-                        new CrazyAttendee("Mariolka", "mariolka@from", 2, 0, 0),
-                        new CrazyAttendee("Rysiek", "rysiek@from", 20, 40, 1))));
+        calendar.meetings.add(new CrazyNight(dateStart: new Date(), dateEnd: new Date(),
+                attendeeList: Arrays.asList(
+                        new CrazyAttendee(name: "Waldek", email: "waldek@from", bottlesOfBeer: 7, bottlesOfVodka: 8, snacks: 2),
+                        new CrazyAttendee(name: "Piotrek", email: "piotrek@from", bottlesOfBeer: 1, bottlesOfVodka: 2, snacks: 10),
+                        new CrazyAttendee(name: "Mariolka", email: "mariolka@from", bottlesOfBeer: 2, bottlesOfVodka: 0, snacks: 0),
+                        new CrazyAttendee(name: "Rysiek", email: "rysiek@from", bottlesOfBeer: 20, bottlesOfVodka: 40, snacks: 1))));
 
         calendar.writeMeetings("src/main/resources/calendar.json");
 
