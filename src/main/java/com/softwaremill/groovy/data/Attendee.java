@@ -1,10 +1,13 @@
 package com.softwaremill.groovy.data;
 
-public class Attendee {
+public abstract class Attendee {
 
     private String name;
 
     private String email;
+
+    public Attendee() {
+    }
 
     public Attendee(String name, String email) {
         this.name = name;
@@ -27,5 +30,11 @@ public class Attendee {
         this.email = email;
     }
 
-
+    @Override
+    public String toString() {
+        return "Attendee{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

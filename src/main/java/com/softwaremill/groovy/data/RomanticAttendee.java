@@ -6,6 +6,9 @@ public class RomanticAttendee extends Attendee {
 
     private Sex lookingFor;
 
+    public RomanticAttendee() {
+    }
+
     public RomanticAttendee(String name, String email, Sex sex, Sex lookingFor) {
         super(name, email);
         this.sex = sex;
@@ -26,5 +29,13 @@ public class RomanticAttendee extends Attendee {
 
     public void setLookingFor(Sex lookingFor) {
         this.lookingFor = lookingFor;
+    }
+
+    @Override
+    public String toString() {
+        return "RomanticAttendee{" +
+                "sex=" + sex +
+                ", lookingFor=" + lookingFor +
+                '}';
     }
 }

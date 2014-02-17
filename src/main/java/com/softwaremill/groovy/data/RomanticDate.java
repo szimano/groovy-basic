@@ -1,11 +1,15 @@
 package com.softwaremill.groovy.data;
 
 import java.util.Date;
+import java.util.List;
 
-public class RomanticDate extends Meeting {
+public class RomanticDate extends Meeting<RomanticAttendee> {
 
-    public RomanticDate(Date dateStart, Date dateEnd) {
-        super(dateStart, dateEnd);
+    public RomanticDate() {
+    }
+
+    public RomanticDate(Date dateStart, Date dateEnd, List<RomanticAttendee> attendees) {
+        super(dateStart, dateEnd, MeetingType.CRAZY, attendees);
     }
 
     public boolean isMoral() {

@@ -5,22 +5,28 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public abstract class Meeting implements Comparable<Meeting> {
+public abstract class Meeting<T extends Attendee> implements Comparable<Meeting> {
 
     private Date dateStart;
     private Date dateEnd;
 
-    private List<Attendee> attendeeList;
+    private List<T> attendeeList;
 
-    public Meeting(Date dateStart, Date dateEnd) {
+    private MeetingType type;
+
+    public Meeting() {
+    }
+
+    public Meeting(Date dateStart, Date dateEnd, MeetingType type) {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
+        this.type = type;
 
         this.attendeeList = new ArrayList<>();
     }
 
-    public Meeting(Date dateStart, Date dateEnd, List<Attendee> attendeeList) {
-        this(dateStart, dateEnd);
+    public Meeting(Date dateStart, Date dateEnd, MeetingType type, List<T> attendeeList) {
+        this(dateStart, dateEnd, type);
 
         this.attendeeList = attendeeList;
     }
@@ -55,16 +61,25 @@ public abstract class Meeting implements Comparable<Meeting> {
         this.dateEnd = dateEnd;
     }
 
-    public List<Attendee> getAttendeeList() {
+    public List<? extends Attendee> getAttendeeList() {
         return attendeeList;
     }
 
-    public void setAttendeeList(List<Attendee> attendeeList) {
+    public void setAttendeeList(List<T> attendeeList) {
         this.attendeeList = attendeeList;
     }
 
     @Override
     public int compareTo(Meeting other) {
         return dateStart.compareTo(other.dateStart);
+    }
+
+    @Override
+    public String toString() {
+        return "Meeting{" +
+                "dateStart=" + dateStart +
+                ", dateEnd=" + dateEnd +
+                ", attendeeList=" + attendeeList +
+                '}';
     }
 }
