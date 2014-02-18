@@ -1,5 +1,6 @@
 package com.softwaremill.groovy.groovydata
 
+import groovy.time.TimeCategory
 import groovy.transform.Canonical
 
 @Canonical
@@ -16,30 +17,17 @@ public abstract class Meeting<T extends Attendee> implements Comparable<Meeting>
         if (newTimeInMinutes <= 0) {
             throw new RuntimeException("Meeting length has to be greater then 0");
         }
-        dateEnd = getEndDate(dateStart, newTimeInMinutes);
+
+        use(TimeCategory) {
+            dateEnd = dateStart + newTimeInMinutes.minutes
+        }
     }
 
     public void moveByDays(int howMany) {
-        dateStart = moveDateByDays(dateStart, howMany);
-        dateEnd = moveDateByDays(dateEnd, howMany);
-    }
-
-    private Date moveDateByDays(Date date, int howMany) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-
-        c.add(Calendar.DAY_OF_MONTH, howMany);
-
-        return c.getTime();
-    }
-
-    private Date getEndDate(Date date, int minutes) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-
-        c.add(Calendar.MINUTE, minutes);
-
-        return c.getTime();
+        use(TimeCategory) {
+            dateStart += howMany.days
+            dateEnd += howMany.days
+        }
     }
 
     @Override
