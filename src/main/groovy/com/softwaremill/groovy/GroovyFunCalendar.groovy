@@ -61,26 +61,14 @@ class GroovyFunCalendar {
     }
 
     public void removeBadGuests() {
-        for (Meeting meeting : meetings) {
-            if (meeting instanceof CrazyNight) {
-                CrazyNight party = (CrazyNight) meeting;
+        def crazyNights = meetings.findAll {it.type == MeetingType.CRAZY};
 
-                Iterator<CrazyAttendee> it = party.getAttendeeList().iterator();
+        crazyNights.each {
+            def badAttendees = it.attendeeList.findAll {it.getBottlesOfBeer() + it.getBottlesOfVodka() < 10 || it.getSnacks() == 0}
 
-                while (it.hasNext()) {
-                    CrazyAttendee attendee = it.next();
+            badAttendees.each {it.sendEmail("Bring booze and snacks next time!")}
 
-                    if (attendee.getBottlesOfBeer() + attendee.getBottlesOfVodka() < 10) {
-                        attendee.sendEmail("Sorry man. Not enough booze");
-
-                        it.remove();
-                    } else if (attendee.getSnacks() == 0) {
-                        attendee.sendEmail("Sorry man. Next time bring something to eat");
-
-                        it.remove();
-                    }
-                }
-            }
+            it.attendeeList -= badAttendees;
         }
     }
 
