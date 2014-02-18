@@ -1,5 +1,4 @@
 package com.softwaremill.groovy
-
 import com.softwaremill.groovy.groovydata.Business
 import com.softwaremill.groovy.groovydata.BusinessAttendee
 import com.softwaremill.groovy.groovydata.CrazyAttendee
@@ -31,11 +30,7 @@ class GroovyFunCalendar {
 
     public void showUpcomingMeetings() {
         System.out.println("Upcoming meetings:");
-        for (Meeting meeting : meetings) {
-            if (meeting.getDateStart().compareTo(new Date()) > 0) {
-                System.out.println("\t" + meeting);
-            }
-        }
+        meetings.findAll {meetings.dateStart > new Date()}.each {println "\t$it"}
     }
 
     public void removeInmoralDates() {
