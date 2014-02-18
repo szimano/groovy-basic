@@ -39,25 +39,16 @@ class GroovyFunCalendar {
     }
 
     public void removeInmoralDates() {
-        Iterator<Meeting> it = meetings.iterator();
 
-        while (it.hasNext()) {
-            Meeting m = it.next();
+        def isInmoral = {
+            if (size() > 2) return true
 
-            if (m instanceof RomanticDate) {
-                RomanticDate date = (RomanticDate) m;
-
-                if (date.getAttendeeList().size() > 2) {
-                    it.remove();
-                } else {
-                    Sex firstSex = date.getAttendeeList().get(0).getSex();
-                    Sex secondSex = date.getAttendeeList().get(1).getSex();
-                    if (firstSex == secondSex || firstSex == Sex.DOESNT_MATTER || secondSex == Sex.DOESNT_MATTER) {
-                        it.remove();
-                    }
-                }
-            }
+            def firstSex = get(0).sex
+            def secondSex = get(1).sex
+            return (Sex.DOESNT_MATTER in [firstSex, secondSex] || firstSex == secondSex)
         }
+
+        meetings.removeAll {it.type == MeetingType.ROMANTIC && it.attendeeList.with(isInmoral)}
     }
 
     public void removeBadGuests() {
